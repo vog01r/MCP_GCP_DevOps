@@ -4,9 +4,11 @@
 
 <div align="center">
 
-https://github.com/vog01r/MCP_GCP_DevOps/assets/1114.mp4
+![Démonstration du serveur MCP GCP](1114.mp4)
 
-**👉 [Télécharger la vidéo](1114.mp4) si elle ne s'affiche pas**
+**👉 [Voir la vidéo complète](1114.mp4)**
+
+*Découvrez comment déployer votre infrastructure GCP en langage naturel avec Claude*
 
 </div>
 
