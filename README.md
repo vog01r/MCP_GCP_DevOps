@@ -1,5 +1,17 @@
 # Serveur MCP GCP Infrastructure
 
+## 🎥 Démonstration vidéo
+
+<div align="center">
+
+https://github.com/vog01r/MCP_GCP_DevOps/assets/1114.mp4
+
+**👉 [Télécharger la vidéo](1114.mp4) si elle ne s'affiche pas**
+
+</div>
+
+---
+
 Serveur MCP (Model Context Protocol) pour gérer l'infrastructure GCP (Google Cloud Platform) en langage naturel via Claude. Ce serveur permet de déployer et gérer des machines virtuelles, de gérer des clés SSH, et de déployer de l'infrastructure avec Terraform.
 
 > **⚠️ AVERTISSEMENT IMPORTANT - SÉCURITÉ**
