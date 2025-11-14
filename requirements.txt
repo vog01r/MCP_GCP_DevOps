@@ -1,0 +1,15 @@
+Flask==3.0.0
+flask-cors==4.0.0
+psycopg2-binary==2.9.9
+python-dotenv==1.0.0
+
+# GCP libraries
+google-cloud-compute==1.14.1
+google-auth==2.23.4
+
+# SSH connection
+paramiko==3.4.0
+cryptography==41.0.7
+
+# Terraform
+python-terraform==0.10.1

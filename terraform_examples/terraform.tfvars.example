@@ -1,0 +1,6 @@
+# Fichier de variables Terraform
+# Copiez ce fichier en terraform.tfvars et modifiez les valeurs selon vos besoins
+
+instance_name  = "mon-serveur-web"
+machine_type   = "e2-medium"
+disk_size_gb   = 20
