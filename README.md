@@ -4,13 +4,13 @@
 
 <div align="center">
 
-![Démonstration du serveur MCP GCP](demo_short.gif)
+![Démonstration du serveur MCP GCP](media/demo_short.gif)
 
-**👉 [Voir la vidéo complète (898 Ko)](1114.mp4)**
+**👉 [Voir la vidéo complète (898 Ko)](media/1114.mp4)**
 
 *Découvrez comment déployer votre infrastructure GCP en langage naturel avec Claude*
 
-> **Note** : Le GIF animé ci-dessus se lance automatiquement. Pour la vidéo complète avec son, [téléchargez le fichier MP4](1114.mp4).
+> **Note** : Le GIF animé ci-dessus se lance automatiquement. Pour la vidéo complète avec son, [téléchargez le fichier MP4](media/1114.mp4).
 
 </div>
 
