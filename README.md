@@ -4,16 +4,11 @@
 
 <div align="center">
 
-**👉 [🎬 Cliquez ici pour voir la vidéo de démonstration](1114.mp4)**
+**👉 [🎬 Cliquez ici pour voir la vidéo de démonstration (898 Ko)](1114.mp4)**
 
 *Découvrez comment déployer votre infrastructure GCP en langage naturel avec Claude*
 
-> **Note** : GitHub ne supporte pas la lecture directe de vidéos dans les README. Cliquez sur le lien ci-dessus pour télécharger et visionner la vidéo, ou hébergez-la sur [YouTube](https://www.youtube.com) / [Vimeo](https://vimeo.com) pour un affichage intégré.
-
-**Alternatives recommandées :**
-- 📹 Héberger la vidéo sur **YouTube** et l'intégrer avec une image cliquable
-- 📦 Utiliser **GitHub Releases** pour héberger la vidéo
-- 🖼️ Créer une **capture d'écran cliquable** qui redirige vers la vidéo
+> **Note** : La vidéo a été optimisée pour GitHub (réduite de 27 Mo à 898 Ko). GitHub ne supporte pas la lecture directe de vidéos dans les README, mais vous pouvez cliquer sur le lien pour la télécharger et la visionner.
 
 </div>
 
