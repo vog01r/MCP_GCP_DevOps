@@ -4,11 +4,13 @@
 
 <div align="center">
 
-**👉 [🎬 Cliquez ici pour voir la vidéo de démonstration (898 Ko)](1114.mp4)**
+[![Démonstration du serveur MCP GCP - Cliquez pour voir la vidéo](video-thumbnail-play.png)](1114.mp4)
+
+**👉 [Télécharger la vidéo (898 Ko)](1114.mp4)**
 
 *Découvrez comment déployer votre infrastructure GCP en langage naturel avec Claude*
 
-> **Note** : La vidéo a été optimisée pour GitHub (réduite de 27 Mo à 898 Ko). GitHub ne supporte pas la lecture directe de vidéos dans les README, mais vous pouvez cliquer sur le lien pour la télécharger et la visionner.
+> **Note** : Cliquez sur l'image ci-dessus pour télécharger et visionner la vidéo. La vidéo a été optimisée pour GitHub (réduite de 27 Mo à 898 Ko).
 
 </div>
 
