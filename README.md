@@ -2,6 +2,18 @@
 
 Serveur MCP (Model Context Protocol) pour gérer l'infrastructure GCP (Google Cloud Platform) en langage naturel via Claude. Ce serveur permet de déployer et gérer des machines virtuelles, de gérer des clés SSH, et de déployer de l'infrastructure avec Terraform.
 
+> **⚠️ AVERTISSEMENT IMPORTANT - SÉCURITÉ**
+> 
+> Ce projet est **uniquement à but de présentation des travaux sur l'intelligence artificielle** et ne doit **PAS être utilisé en production** sans modifications de sécurité majeures.
+> 
+> **🔴 Aucune authentification OAuth n'est implémentée** : Le serveur MCP est accessible publiquement sans authentification. Toute personne ayant accès à l'URL du serveur peut l'utiliser et potentiellement accéder à vos ressources GCP.
+> 
+> **⚠️ Utilisez uniquement dans un environnement de développement isolé ou avec des mesures de sécurité appropriées (pare-feu, authentification, etc.).**
+
+> **📋 Note sur l'utilisation avec Claude**
+> 
+> Pour que Claude puisse s'authentifier facilement avec votre serveur MCP, il est **fortement recommandé** d'utiliser un **nom de domaine avec HTTPS** plutôt qu'une adresse IP ou HTTP. Claude nécessite une connexion sécurisée (HTTPS) pour fonctionner correctement avec les serveurs MCP externes.
+
 ## Fonctionnalités
 
 ### 🔑 Gestion des clés SSH
@@ -36,6 +48,8 @@ Serveur MCP (Model Context Protocol) pour gérer l'infrastructure GCP (Google Cl
 - Python 3.8+
 - Compte GCP avec un projet configuré
 - Fichier de clé de service GCP (service-account-key.json)
+- **Nom de domaine avec certificat SSL/TLS** (recommandé pour l'utilisation avec Claude)
+- **Reverse proxy (Nginx/Apache) avec HTTPS** configuré (recommandé)
 
 ### Étapes d'installation
 
@@ -66,17 +80,68 @@ sudo apt update && sudo apt install terraform
 
 ## Utilisation
 
+### Configuration HTTPS avec nom de domaine (Recommandé)
+
+Pour que Claude puisse s'authentifier facilement, configurez votre serveur avec HTTPS et un nom de domaine :
+
+1. **Obtenir un certificat SSL** (Let's Encrypt recommandé) :
+```bash
+sudo apt install certbot python3-certbot-nginx
+sudo certbot --nginx -d votre-domaine.com
+```
+
+2. **Configurer Nginx comme reverse proxy** :
+```nginx
+server {
+    listen 443 ssl;
+    server_name votre-domaine.com;
+
+    ssl_certificate /etc/letsencrypt/live/votre-domaine.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/votre-domaine.com/privkey.pem;
+
+    location / {
+        proxy_pass http://localhost:5001;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+3. **Redémarrer Nginx** :
+```bash
+sudo systemctl restart nginx
+```
+
 ### Démarrage du serveur
 
 ```bash
 python3 mcp_server.py
 ```
 
-Le serveur démarrera sur `http://0.0.0.0:5001`
+Le serveur démarrera sur `http://0.0.0.0:5001` (utilisez HTTPS via le reverse proxy pour la production)
 
 ### Configuration dans Claude Desktop
 
-Ajoutez cette configuration dans votre fichier de configuration Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_config.json` sur macOS) :
+Pour utiliser le serveur MCP avec Claude via HTTPS, configurez l'URL de votre serveur :
+
+```json
+{
+  "mcpServers": {
+    "gcp-infrastructure": {
+      "url": "https://votre-domaine.com",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    }
+  }
+}
+```
+
+**Note** : Utilisez votre nom de domaine avec HTTPS (ex: `https://mcp.votre-domaine.com`) pour que Claude puisse s'authentifier correctement.
+
+Pour une utilisation locale uniquement, vous pouvez aussi utiliser la commande directe :
 
 ```json
 {
@@ -317,10 +382,31 @@ Les clés SSH sont stockées de manière sécurisée :
 
 ## Sécurité
 
+### ⚠️ AVERTISSEMENTS CRITIQUES
+
+**Ce serveur MCP n'implémente AUCUNE authentification OAuth ou autre mécanisme de sécurité.**
+
+**Risques de sécurité :**
+- 🔴 **Accès public non authentifié** : Toute personne ayant l'URL peut utiliser votre serveur
+- 🔴 **Exposition des ressources GCP** : Accès potentiel à vos VMs, clés SSH, et infrastructure
+- 🔴 **Pas de rate limiting** : Vulnérable aux attaques par déni de service
+- 🔴 **Pas de logging d'audit** : Impossible de tracer qui a utilisé le serveur
+
+**Recommandations pour la production :**
+1. ✅ **Implémenter OAuth 2.0** ou un autre mécanisme d'authentification
+2. ✅ **Utiliser HTTPS obligatoire** (certificat SSL valide)
+3. ✅ **Configurer un pare-feu** pour limiter l'accès par IP
+4. ✅ **Ajouter un rate limiting** pour prévenir les abus
+5. ✅ **Activer les logs d'audit** pour tracer toutes les actions
+6. ✅ **Utiliser un reverse proxy** (Nginx/Traefik) avec authentification
+7. ✅ **Restreindre les permissions GCP** au strict minimum nécessaire
+
 ### Bonnes pratiques
 1. **Clés SSH** : Stockées avec permissions restrictives (600)
 2. **Service Account** : Utilise les credentials GCP avec permissions minimales nécessaires
 3. **Clés privées** : Jamais exposées dans les réponses de l'API (seules les clés publiques sont retournées)
+4. **HTTPS obligatoire** : Utilisez toujours HTTPS en production, jamais HTTP
+5. **Nom de domaine** : Utilisez un nom de domaine valide avec certificat SSL pour Claude
 
 ### Permissions GCP requises
 Le service account doit avoir au minimum :
@@ -358,6 +444,20 @@ Health check du serveur
 
 #### POST /mcp
 Endpoint principal MCP (JSON-RPC 2.0)
+
+## À propos de ce projet
+
+**Ce dépôt GitHub est uniquement à but de présentation des travaux sur l'intelligence artificielle.**
+
+Ce projet démontre l'intégration d'un serveur MCP (Model Context Protocol) avec Google Cloud Platform pour permettre à Claude (et autres assistants IA) de gérer l'infrastructure cloud en langage naturel.
+
+**Objectifs pédagogiques :**
+- Démonstration de l'utilisation du protocole MCP
+- Intégration avec les APIs GCP
+- Gestion d'infrastructure via IA conversationnelle
+- Exemples de code pour la communauté
+
+**⚠️ Ne pas utiliser en production sans modifications de sécurité majeures.**
 
 ## Contribuer
 
